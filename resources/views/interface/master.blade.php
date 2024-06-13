@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   @include('interface.widgets.head')
+    @include('interface.widgets.head')
 </head><!--/head-->
 
 <body>
@@ -12,8 +13,10 @@
 
     @yield('content')
     <!--Footer-->
-    @include('interface.widgets.footer')
-	<!--/Footer-->
+    @if (!isset($showFooter) || $showFooter)
+        @include('interface.widgets.footer')
+    @endif
+    <!--/Footer-->
 
 
     {{-- js --}}
@@ -22,4 +25,5 @@
     @stack('js')
 
 </body>
+
 </html>

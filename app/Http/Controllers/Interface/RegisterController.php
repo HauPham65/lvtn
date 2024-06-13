@@ -7,47 +7,32 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
     public function index()
     {
         //gọi giao diện đăng ký
-        return view('interface.Register', ['title' => 'Đăng ký']);
+        return view('interface.Register', ['title' =>'Đăng ký']);
     }
-
-
+    // Phương thức POST BL
+  
     public function registerPost(Request $request)
     {
-
-        // thực hiện truy vấn csdl lấy các dữ liệu trùng với request nếu bất kỳ fields trùng trả về một đối tượng user ngược lại null
         $check_user = User::select('username', 'email')
             ->where('username', $request->username)
             ->Orwhere('email', $request->email)
             ->first();
-        //nếu $user khác null,false,rỗng.0 có nghĩa tìm thấy user tương ứng đá ngược về giao diện đăng ký yêu cầu đăng ký tại khoản mới hoặc hướng cho người dùng từ đăng ký sang đăng nhập
         if ($check_user) {
-            return redirect()->route('interface.register')->with(['msg' => 'tài khoản đã tồn tại', 'type' => 'danger']);
+            return redirect()->route('interface.register')->with(['msg' => 'Tài khoản đã tồn tại', 'type' => 'danger']);
         }
-        //check validate form kiểm tra dữ liệu đầu vào
-        /**
-         *
-         * tất cả cái field không được rỗng
-         * kiểm tra email và username đã tồn tại chưa
-         * mật khẩu phải có chữ cái
-         * email phải đúng định dạng
-         * phone phải đúng độ dài của các nhà mạng vn thường 10 số
-         * required : không được phép để trống
-         * regex:/^(?=.*[a-z])(?=.*\d).+$/| laravel có sẵn hộ trợ
-         * confirmed so sanh password
-         *  định dạng đúng 10 số: phone phải đúng độ dài của các nhà mạng vn thường 10 số
-         */
         $request->validate([
             'username' => 'required|min:6',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*\d).+$/|confirmed',
             'email' => 'required|email',
-            'address' => 'required',
-            'phone' => 'required|digits:10',
+
 
         ], [
             'username.required' => 'Tên không được để trống',
@@ -58,27 +43,45 @@ class RegisterController extends Controller
             'password.confirmed' => 'Mật khẩu và nhập lại mật khẩu không khớp',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không hợp lệ',
-            'address.required' => 'Địa chỉ không được để trống',
-            'phone.required' => 'Số điện thoại không được để trống',
-            'phone.digits' => 'Số điện thoại phải có đúng 11 chữ số',
+
         ]);
 
-        //thêm người dùng vào database
-        try {
-            $user = User::create([
-                'username' => $request->username,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'address' => $request->address,
-                'password' => Hash::make($request->password),
-            ]);
-            if ($user) {
-                return redirect()->route('interface.login')->with(['msg' => 'đăng ký thành công', 'type' => 'success']);
-            } else {
-                return redirect()->route('interface.register')->with(['msg' => 'đăng ký thất bại', 'type' => 'danger']);
-            }
-        } catch (\Throwable $th) {
-            return redirect()->route('interface.register')->with(['msg' => 'đăng ký thất bại.ht', 'type' => 'danger']);
+        // Lưu dữ liệu vào session
+        $tempUser = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), 
+        ];
+        $request->session()->put('temp_user', $tempUser);
+                $emailler = $request->email;
+        $token_re ='H&T-'. Str::random(8);
+        $request->session()->put('token_register', $token_re, 120);
+        $request->session()->put('register_email', $emailler);
+        $registerurl = route('interface.verification_register');
+
+        Mail::send('interface.email_register.emailregister', compact('emailler', 'registerurl', 'token_re'), function ($email) use ($emailler) {
+            $email->subject('Xác thực đăng ký tài khoản')
+                ->to($emailler, 'Cửa hàng laptop H&T');
+        });
+        return redirect()->route('interface.verification_register')->with(['msg' => 'nhập mã xác thực để đăng ký', 'type' => 'success']);
+    }
+
+    public function verification_register()
+    {
+        return view('interface.email_register.verification_register', ['title' => 'Xác thực đăng ký']);
+    }
+
+    public function verification_register_post(Request $request)
+    {
+        $token = $request->input('token');
+        if ($token === $request->session()->get('token_register')) {
+            $tempUser = $request->session()->get('temp_user');
+            User::create($tempUser);
+            $request->session()->forget(['temp_user', 'token_register', 'register_email']);
+
+            return redirect()->route('interface.login')->with(['msg' => 'Đăng ký thành công. Vui lòng đăng nhập.', 'type' => 'success']);
+        } else {
+            return redirect()->route('interface.verification_register')->with(['msg' => 'Mã xác thực không chính xác.',  'type' => 'danger']);
         }
     }
 }

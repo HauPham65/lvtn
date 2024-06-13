@@ -42,7 +42,7 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 60px;
+  margin-top: 20px;
   padding: 20px 30px;
   transition: all 0.3s;
 }
@@ -304,20 +304,29 @@ h6 {
 }
 
 /* Breadcrumbs */
+.pagetitle {
+  background-color: #0d6efd;/*màu Breadcrumbs*/
+
+}
+.pagetitle h1{
+  color: #FF9900;
+}
 .breadcrumb {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
-  color: #899bbd;
+  /* color: #899bbd; */
+  color: #fff;
   font-weight: 600;
 }
 
 .breadcrumb a {
-  color: #899bbd;
+  /* color: #899bbd; */
+  color: #fff;
   transition: 0.3s;
 }
 
 .breadcrumb a:hover {
-  color: #51678f;
+  color: #FF9900;
 }
 
 .breadcrumb .breadcrumb-item::before {
@@ -325,7 +334,8 @@ h6 {
 }
 
 .breadcrumb .active {
-  color: #51678f;
+  /* color: #51678f; */
+  color: #fff;
   font-weight: 600;
 }
 
@@ -372,7 +382,7 @@ h6 {
 .logo span {
   font-size: 26px;
   font-weight: 700;
-  color: #012970;
+  color: #fff;/*màu chữ header*/
   font-family: "Nunito", sans-serif;
 }
 
@@ -381,7 +391,7 @@ h6 {
   z-index: 997;
   height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
+  background-color: #0d6efd;  /* màu nền header*/
   padding-left: 20px;
   /* Toggle Sidebar Button */
   /* Search Bar */
@@ -391,7 +401,7 @@ h6 {
   font-size: 32px;
   padding-left: 10px;
   cursor: pointer;
-  color: #012970;
+  color: #fff;/*màu chữ header*/
 }
 
 .header .search-bar {
@@ -474,7 +484,7 @@ h6 {
 }
 
 .header-nav .nav-profile {
-  color: #012970;
+  color: #fff; /*màu chữ header*/
 }
 
 .header-nav .nav-profile img {
@@ -610,7 +620,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
+  background-color: #404040; /* màu nền thanh bên trái*/
 }
 
 @media (max-width: 1199px) {
@@ -679,40 +689,40 @@ h6 {
   margin: 10px 0 5px 15px;
 }
 
-.sidebar-nav .nav-link {
+.sidebar-nav .nav-link { /* chữ thống kê*/
   display: flex;
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: #FF9900;
   transition: 0.3;
-  background: #f6f9ff;
+  background: #4154f1; /* khung thanh bên phải*/
   padding: 10px 15px;
   border-radius: 4px;
 }
 
-.sidebar-nav .nav-link i {
+.sidebar-nav .nav-link i { /* icon thanh menu bên phải */
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #FF9900; /*#0d6efd* và #4154f1/
 }
 
-.sidebar-nav .nav-link.collapsed {
-  color: #012970;
-  background: #fff;
+.sidebar-nav .nav-link.collapsed { /* Chữ của thanh menu bên phải */
+  color: #FF9900;
+  background: #4154f1;
 }
 
-.sidebar-nav .nav-link.collapsed i {
-  color: #899bbd;
+.sidebar-nav .nav-link.collapsed i {  /*Icon trỏ xuống*/
+  color: #FF9900; /* màu nguyên bản #899bbd*/
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
-  background: #f6f9ff;
+  color: #fff;/*màu chữ sidebar*/
+  background: #FF9900;/*màu nền sidebar ( màu cái thanh di chuyển bên phải)*/ 
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #FF9900;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -730,12 +740,12 @@ h6 {
   list-style: none;
 }
 
-.sidebar-nav .nav-content a {
+.sidebar-nav .nav-content a { /*Màu chữ danh sách*/
   display: flex;
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #FF9900;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -750,12 +760,13 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #FF9900; /* chữ trỏ vào */
 }
 
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: #FF9900;
 }
+
 
 /*--------------------------------------------------------------
 # Dashboard
@@ -919,7 +930,10 @@ h6 {
 .dashboard .recent-sales {
   font-size: 14px;
 }
-
+.table {
+    width: 100%;
+    overflow-x: auto;
+}
 .dashboard .recent-sales .table thead {
   background: #f6f6fe;
 }
@@ -1230,4 +1244,20 @@ h6 {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #6c757d;; /* Màu nền khi hover */
+}
+.general-submit01 {
+    border-style: none;
+    background-color: #ffff;
+
+    margin-left: 40px;
+}
+.boder-dd {
+    border-bottom: 1px solid;
+    padding-bottom:3px ;
+}
+.general-submit01:hover {
+    color: #ed3c0d ;
 }

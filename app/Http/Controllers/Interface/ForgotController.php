@@ -19,10 +19,10 @@ class ForgotController extends Controller
         return view('interface.email.forgotpass', ['title' => 'Quên mật khẩu']);
     }
 
-
+    // BL quên mật khẩu
     public function forgotPost(Request $request)
     {
-        if (User::where('email', $request->email)->where('status', 1)->first()) {
+        if (User::where('email', $request->email)->first()) {
             $emailler = $request->email;
             $token_pass = 'H&T-' . Str::random(8);
             //session(['token_resetpass'=>$token_pass]);
@@ -35,48 +35,52 @@ class ForgotController extends Controller
             });
             return redirect()->route('interface.verification')->with(['msg' => 'Chúng tôi đã gửi một email đặt lại mật khẩu đến địa chỉ email của bạn.', 'type' => 'success']);
         } else {
-            return redirect()->route('interface.forgotpass')->with(['msg' => 'email chưa đăng ký tài khoản hoặc tài khoản bạn đã bị khoá', 'type' => 'danger']);
+            return redirect()->route('interface.forgotpass')->with(['msg' => 'Email chưa đăng ký hoặc bị xóa do ảnh hưởng đến shop và không được để trống ! ', 'type' => 'danger']);
         }
     }
-
+    // Xử lý mã xác minh email
     public function verification()
     {
         return view('interface.email.verification', ['title' => 'xác minh']);
     }
 
+    // Dùng phương thức Post
     public function verifiPost(Request $request)
     {
-        if (!session('token_resetpass') && $request->token !== session('token_resetpass')) {
-            return redirect()->route('interface.verification')->with(['msg' => 'mã không hợp lệ hoặc mã của bạn đã hết hạn ', 'type' => 'danger']);
+        //kiểm tra tokeen resetpass
+        if (!session('token_resetpass') || $request->token !== session('token_resetpass')) {
+            return redirect()->route('interface.verification')->with(['msg' => 'Mã không hợp lệ hoặc mã của bạn đã hết hạn và không được để trống ', 'type' => 'danger']);
         } else {
             return redirect()->route('interface.reserpass');
         }
     }
-
+    // Xử lý đặt lại mật khẩu
     public function resetPassword()
     {
         return view('interface.resetpassword', ['title' => 'Đặt lại mật khẩu']);
     }
-
+    // BL đặt lại mật khẩu
     public function updatePass(Request $request)
     {
-
         $request->validate([
-            'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*\d).+$/|confirmed'
+            'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*\d).+$/|confirmed',
+            'password_confirmation' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*\d).+$/'
         ], [
+            'password.required' => 'Không được để trống thông tin',
+            'password_confirmation.required' => 'Không được để trống thông tin',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-            'password.regex' => 'Mật khẩu phải chứa ít nhất một chữ thường, một chữ hoa và một số',
-            'password.confirmed' => 'Mật khẩu và nhập lại mật khẩu không khớp'
+            'password.regex' => 'Mật khẩu phải chứa ít nhất một chữ thường, một chữ hoa hoặc một số',
+            'password.confirmed' => 'Mật khẩu và nhập lại mật khẩu không khớp',
+            'password_confirmation.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+            'password_confirmation.regex' => 'Mật khẩu phải chứa ít nhất một chữ thường, một chữ hoa hoặc một số',
         ]);
         $user = User::where('email', session('user_email'))->first();
         if ($user) {
             $user->password = Hash::make($request->password);
             $user->save();
-            return redirect()->route('interface.login')->with(['msg' => 'đặt lại mật khẩu thành công', 'type' => 'success']);
+            return redirect()->route('interface.login')->with(['msg' => 'Đặt lại mật khẩu thành công', 'type' => 'success']);
         } else {
-            return redirect()->back()->with(['msg' => 'đặt lại mật khẩu thất bại', 'type' => 'danger']);
+            return redirect()->back()->with(['msg' => 'Đặt lại mật khẩu thất bại', 'type' => 'danger']);// lỗi hệ thống
         }
     }
-
-    
 }

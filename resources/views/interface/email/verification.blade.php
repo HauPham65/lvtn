@@ -12,8 +12,9 @@
                             <strong>{{ session('msg') }}</strong>
                         </div>
                     @endif
-                    <h2 class="text-align-center">Xác minh để đặt lại mật khẩu</h2>
-                    <p>vui lòng nhập mã xác minh</p>
+                    <h2 class="text-align-center">Xác minh để đặt lại mật khẩu </h2>
+                    <p><span style="font-size: 16px; line-height: 22.4px; background-color:#00FFFF"> Vui lòng nhập mã xác
+                     minh để xác thực tài khoản </span></p>
                     <form action="{{ route('interface.verifipost') }}" method="post">
                         @csrf
                         <div class="form-group">
@@ -24,11 +25,10 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-warning">xác minh</button>
+                        <button type="submit" style="background-color:#00FFFF" class="btn mx-auto">Xác minh</button>
                     </form>
                 </div>
             </div>
         </div>
-
     </section><!--/form-->
 @endsection

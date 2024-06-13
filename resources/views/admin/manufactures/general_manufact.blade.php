@@ -11,7 +11,7 @@
                     @include('admin.widgets.breadcrumb')
                     <div class="card">
                         <div class="card-body">
-                            <h2 style="text-align: center">Thêm sản phẩm</h2>
+                            <h2 style="text-align: center">{{$title}}</h2>
                             @include('admin.widgets.message')
                             <form action="{{ $action }}" method="post">
                                 @csrf
@@ -24,7 +24,7 @@
                                 @error('name')
                                     <div class='text-danger'>{{ $message }}</div>
                                 @enderror
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="">Loại</label>
                                     <select required class="form-control" name="categories_id">
                                         <option value=""> --- Chọn loại --- </option>
@@ -33,8 +33,9 @@
                                                 value="{{ $citem->id ?? '' }}">
                                                 {{ $citem->name }}</option>
                                         @endforeach
+                                       
                                     </select>
-                                </div>
+                                </div> -->
                                 @error('categories_id')
                                     <div class='text-danger'>{{ $message }}</div>
                                 @enderror
@@ -42,7 +43,7 @@
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-warning btn-sm">{{ $submit ?? 'Thêm' }}</button>
                                     <a type="button" class="btn btn-success btn-sm" href="{{ route('manufact.index') }}"
-                                        role="button">xem danh sách</a>
+                                        role="button">Xem danh sách</a>
                                 </div>
                             </form>
                         </div>

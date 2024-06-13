@@ -12,24 +12,26 @@
                             <strong>{{ session('msg') }}</strong>
                         </div>
                     @endif
-                    <h2 class="text-align-center">Đặt lại mật khẩu</h2>
+                    <h2 class="text-align-center">Đặt lại mật khẩu 🧑🏻‍💻</h2>
                     <form action="{{ route('interface.updatepass') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>mật khẩu mới</label>
+                            <label>Mật khẩu mới</label>
                             <input type="password" name="password" class="form-control" placeholder="">
                         </div>
+                        @error('password')
+                            <div class='text-danger'>{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
-                            <label>Xác Nhận Mật khẩu</label>
+                            <label>Xác nhận mật khẩu</label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="">
                         </div>
-                        <a href="{{ route('interface.login') }}"><i class="fa fa-user" aria-hidden="true"></i>Đăng nhập</a>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-warning mx-auto">Đặt lại</button>
+                        @error('password_confirmation')
+                        <div class='text-danger'>{{ $message }}</div>
+                    @enderror
+                            <button type="submit" style="background-color:#00FFFF" class="btn mx-auto">Đặt lại nào!</button>
                     </form>
-                </div>
             </div>
         </div>
-
     </section><!--/form-->
 @endsection

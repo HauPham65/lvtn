@@ -34,11 +34,15 @@ return [
     | Supported: "session"
     |
     */
-
+    //file cấu hình
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
         ],
     ],
 
@@ -58,17 +62,16 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+    //đường dẫn tới dữ liệu 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\admin::class,
+        ],
     ],
 
     /*

@@ -12,13 +12,20 @@
                             <strong>{{ session('msg') }}</strong>
                         </div>
                     @endif
-                    <h2 style="text-align: center">đăng ký tài khoản</h2>
+                    <h2 style="text-align: center">Đăng ký tài khoản 📝</h2>
                     <form action="{{ route('interface.registerPost') }} " method="post">
                         @csrf
                         <div class="form-group">
                             <label>Tên</label>
                             <input type="text" name="username" class="form-control" placeholder="">
                             @error('username')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="">
+                            @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -36,38 +43,16 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="">
-                            @error('email')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Adress</label>
-                            <input type="text" name="address" class="form-control" placeholder="">
-                            @error('address')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Số điện thoại</label>
-                            <input type="text" name="phone" class="form-control" placeholder="">
-                            @error('phone')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                         <a href="{{route('interface.login')}}"><i class="fa fa-user" aria-hidden="true"></i>Đã có tài khoản</a>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-warning">đăng ký</button>
+                            <button style="background-color:#00FFFF" class="btn mx-auto" >Đăng ký</button>
                         </div>
+
                     </form>
                 </div>
-
-
 
             </div>
         </div>
     </section><!--/form-->
 @endsection
-a
+

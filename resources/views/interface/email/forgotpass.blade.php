@@ -1,3 +1,4 @@
+<!--Giao diện quên mật khẩu-->
 @extends('interface.master')
 @section('title')
     {{ $title }}
@@ -12,15 +13,15 @@
                                 <strong>{{ session('msg') }}</strong>
                             </div>
                         @endif
-                        <h2 class="text-align-center">Quên mật khẩu</h2>
-                        <p>vui lòng nhập email mà bạn đã đăng ký tài khoản của cửa hàng chúng tôi!!</p>
+                        <h2 class="text-align-center">Quên mật khẩu 🛠️</h2>
+                        <p style="background-color:#00FFFF;color:black;border:#f0ad4e;font-size:14px;";>Vui lòng nhập E-mail mà bạn đã đăng ký tài khoản và không được để trống E-mail !!</p>
                         <form action="{{ route('interface.forgotPost') }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label>Email</label>
+                                <label>Email 📧</label>
                                 <input type="text" name="email" class="form-control" placeholder="">
                             </div>
-                            <button type="submit" class="btn btn-warning">gửi mail xác nhận</button>
+                            <button type="submit" style="background-color:#00FFFF" class="btn mx-auto">Gửi E-mail xác nhận 💬</button>
                         </form>
 
                 </div>
