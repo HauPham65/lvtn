@@ -50,15 +50,14 @@ class RegisterController extends Controller
         $tempUser = [
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password), 
+            'password' => Hash::make($request->password), //mã hóa mk
         ];
         $request->session()->put('temp_user', $tempUser);
-                $emailler = $request->email;
+        $emailler = $request->email;
         $token_re ='H&T-'. Str::random(8);
         $request->session()->put('token_register', $token_re, 120);
         $request->session()->put('register_email', $emailler);
         $registerurl = route('interface.verification_register');
-
         Mail::send('interface.email_register.emailregister', compact('emailler', 'registerurl', 'token_re'), function ($email) use ($emailler) {
             $email->subject('Xác thực đăng ký tài khoản')
                 ->to($emailler, 'Cửa hàng laptop H&T');
@@ -78,7 +77,6 @@ class RegisterController extends Controller
             $tempUser = $request->session()->get('temp_user');
             User::create($tempUser);
             $request->session()->forget(['temp_user', 'token_register', 'register_email']);
-
             return redirect()->route('interface.login')->with(['msg' => 'Đăng ký thành công. Vui lòng đăng nhập.', 'type' => 'success']);
         } else {
             return redirect()->route('interface.verification_register')->with(['msg' => 'Mã xác thực không chính xác.',  'type' => 'danger']);

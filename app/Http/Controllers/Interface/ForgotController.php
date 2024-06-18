@@ -51,7 +51,7 @@ class ForgotController extends Controller
         if (!session('token_resetpass') || $request->token !== session('token_resetpass')) {
             return redirect()->route('interface.verification')->with(['msg' => 'Mã không hợp lệ hoặc mã của bạn đã hết hạn và không được để trống ', 'type' => 'danger']);
         } else {
-            return redirect()->route('interface.reserpass');
+            return redirect()->route('interface.resetpass');
         }
     }
     // Xử lý đặt lại mật khẩu

@@ -11,7 +11,10 @@ class admin extends Model implements Authenticatable
 {
     use HasFactory, Notifiable;
 
+    use HasFactory, Notifiable;
+
     protected $table = 'admins';
+
     public function getAuthIdentifierName() {
         return 'id'; // Tên cột chứa ID của người dùng trong bảng 'admin'
     }
@@ -23,6 +26,11 @@ class admin extends Model implements Authenticatable
     public function getAuthPassword() {
         return $this->password; // Tên cột chứa mật khẩu của người dùng trong bảng 'admin'
     }
+
+    public function getAuthPasswordName() {
+        return 'password'; // Tên cột chứa mật khẩu của người dùng trong bảng 'admin'
+    }
+
     public function getRememberToken() {
         // Cần triển khai nếu bạn sử dụng Remember Token
     }

@@ -44,7 +44,7 @@ Route::get('/Forgotpass', [ForgotController::class, 'index'])->name('interface.f
 Route::post('/forgotpost', [ForgotController::class, 'forgotPost'])->name('interface.forgotPost');
 route::get('/verification code', [ForgotController::class, 'verification'])->name('interface.verification');
 route::post('verifipost', [ForgotController::class, 'verifiPost'])->name('interface.verifipost');
-route::get('/Reserpass', [ForgotController::class, 'resetPassword'])->name('interface.reserpass');
+route::get('/Reserpass', [ForgotController::class, 'resetPassword'])->name('interface.resetpass');
 route::post('updatepass', [ForgotController::class, 'updatePass'])->name('interface.updatepass');
 //
 route::get('/mail_register',[RegisterController::class,'verification_register'])->name('interface.verification_register');
