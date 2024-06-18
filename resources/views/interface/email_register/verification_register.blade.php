@@ -3,6 +3,7 @@
     {{ $title }}
 @endsection
 @section('content')
+
     <section><!--form-->
         <div class="container">
             <div class="row">

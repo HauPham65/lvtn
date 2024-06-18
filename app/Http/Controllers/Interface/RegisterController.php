@@ -45,7 +45,6 @@ class RegisterController extends Controller
             'email.email' => 'Email không hợp lệ',
 
         ]);
-
         // Lưu dữ liệu vào session
         $tempUser = [
             'username' => $request->username,

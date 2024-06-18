@@ -399,9 +399,6 @@
                     </div>
 
 
-
-
-
                     <div class="u-row-container" style="padding: 0px;background-color: #f9f9f9">
                         <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FE980F;">
                             <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
